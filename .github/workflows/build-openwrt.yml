@@ -113,6 +113,12 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
+    - name: Generate Diff Config
+      run: |
+        cd openwrt
+        make defconfig
+        ./scripts/diffconfig.sh > bin/diff.config
+
     - name: Upload bin directory
       uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
