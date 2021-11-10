@@ -113,12 +113,6 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    - name: Generate Diff Config
-      run: |
-        cd openwrt
-        make defconfig
-        ./scripts/diffconfig.sh > bin/diff.config
-
     - name: Upload bin directory
       uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
@@ -134,6 +128,12 @@ jobs:
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
+    
+    - name: Generate Diff Config
+      run: |
+        cd openwrt
+        make defconfig
+        ./scripts/diffconfig.sh > ${{ env.FIRMWARE }}/diff.config
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
