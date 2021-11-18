@@ -83,12 +83,13 @@ jobs:
         cd openwrt
         make defconfig
         ./scripts/diffconfig.sh > ./diff.config
+        echo "CONFIGPATH=$PWD" >> $GITHUB_ENV
 
-    - name: Upload firmware directory
+    - name: Upload Diff Config
       uses: actions/upload-artifact@main
       with:
         name: diff.config
-        path: ./diff.config
+        path: ${{ env.CONFIGPATH }}
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
