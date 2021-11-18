@@ -81,15 +81,17 @@ jobs:
     - name: Generate Diff Config
       run: |
         cd openwrt
+        mkdir artifact
         make defconfig
-        ./scripts/diffconfig.sh > ./diff.config
-        echo "CONFIGPATH=$PWD" >> $GITHUB_ENV
+        ./scripts/diffconfig.sh > ./artifact/diff.config
+        cd artifact
+        echo "ARTIFACTPATH=$PWD" >> $GITHUB_ENV
 
     - name: Upload Diff Config
       uses: actions/upload-artifact@main
       with:
         name: diff.config
-        path: ${{ env.CONFIGPATH }}
+        path: ${{ env.ARTIFACTPATH }}
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
