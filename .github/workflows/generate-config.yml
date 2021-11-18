@@ -5,10 +5,10 @@
 # See /LICENSE for more information.
 #
 # https://github.com/P3TERX/Actions-OpenWrt
-# Description: Build OpenWrt using GitHub Actions
+# Description: Generate Config using GitHub Actions
 #
 
-name: Build OpenWrt
+name: Generate Config
 
 on:
   repository_dispatch:
